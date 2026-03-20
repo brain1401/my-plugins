@@ -12,17 +12,17 @@ AI 코딩 에이전트용 스킬 모음
 
 ```bash
 # 전체 스킬 설치
-npx skills add <username>/skill.md
+npx skills add brain1401/skill.md
 
 # 스킬 목록 확인
-npx skills add <username>/skill.md --list
+npx skills add brain1401/skill.md --list
 
 # 특정 스킬만 설치
-npx skills add <username>/skill.md --skill korean-code-comments
+npx skills add brain1401/skill.md --skill korean-code-comments
 
 # 특정 에이전트에만 설치
-npx skills add <username>/skill.md -a claude-code
+npx skills add brain1401/skill.md -a claude-code
 
 # 글로벌 설치
-npx skills add <username>/skill.md --global
+npx skills add brain1401/skill.md --global
 ```
