@@ -7,9 +7,9 @@ description: Write Korean comments on complex code sections whenever writing, ed
 
 ## Core Rule
 
-코드를 작성하거나 수정할 때, 아래 기준에 해당하는 복잡한 부분에는 별도 요청이 없어도 반드시 한국어 주석을 추가한다. 이 스킬이 트리거된 이상, 주석 작성은 선택이 아닌 기본 행동이다. 사용자가 "주석 달아줘"라고 말하지 않아도, 코드를 건드리는 순간 이 가이드라인이 적용된다.
+When writing or modifying code, always add Korean comments to complex sections that meet the criteria below, even without an explicit request. Once this skill is triggered, commenting is default behavior, not optional. These guidelines apply the moment you touch code, regardless of whether the user asks for comments.
 
-자명한 코드에는 주석을 달지 않는다. 주석은 "왜" 또는 "어떤 맥락에서"를 설명할 때 가치가 있다.
+Do not comment self-evident code. Comments are valuable when they explain "why" or "in what context."
 
 ## When to Write Comments
 
@@ -76,7 +76,6 @@ When explaining complex logic, use `1. 2. 3.` numbering for readability. Do NOT 
 
 ## `use cache` (새로운 방식)      ← (O) parentheses in heading
 ```
-
 
 ### No AI Authorship Traces
 
