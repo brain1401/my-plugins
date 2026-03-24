@@ -1,6 +1,6 @@
 ---
 name: ctx7-docs-lookup
-description: Forces the use of ctx7 (context7 MCP) to consult official documentation when encountering repeated or unknown errors during coding, or when uncertain whether your knowledge accurately applies to the current project during planning. Triggers on any code implementation or planning situation, especially when errors repeat 2+ times or library/framework API usage is uncertain. Consult this skill whenever debugging errors, adopting new libraries, verifying API usage, writing config files, handling migrations, or any situation where checking official docs could prevent wasted effort.
+description: This skill should be used when encountering repeated or unknown errors during coding, or when uncertain whether current knowledge accurately applies to the project's library versions during planning. Triggers on any code implementation or planning situation, especially when errors repeat 2+ times or library/framework API usage is uncertain. Consult this skill whenever debugging errors, adopting new libraries, verifying API usage, writing config files, handling migrations, or any situation where checking official docs could prevent wasted effort. Forces the use of ctx7 (context7) to consult official documentation.
 ---
 
 # ctx7 Official Documentation Lookup Guide
@@ -64,15 +64,32 @@ Planning based on "this will probably work" can cause the entire plan to collaps
 
 ## How to Use context7
 
-context7 can be accessed through multiple paths depending on your environment. Use whichever is available to you:
+The `$CTX7_MODE` environment variable is automatically set at session start. Check its value and follow the corresponding path below.
 
-| Access Method | How |
-|---|---|
-| **MCP tools** | `mcp__context7__resolve-library-id` and `mcp__context7__query-docs` |
-| **Skill** | Invoke the `find-docs` skill (if installed) |
-| **Other integrations** | Any context7-compatible plugin, extension, or CLI tool available in your environment |
+### If `CTX7_MODE=mcp` — MCP Tools Available
 
-The important thing is not *how* you access context7, but that you **do** access it when the trigger conditions are met.
+Use MCP tools directly:
+
+1. **Resolve the library ID** — call `mcp__context7__resolve-library-id` with the library name (e.g., "nextjs", "react", "prisma")
+2. **Query the documentation** — call `mcp__context7__query-docs` with the resolved library ID and a detailed, descriptive topic. Include version number and project context in your query when relevant.
+3. **Evaluate the results** — check whether the docs confirm your approach or reveal a better/newer API.
+4. **If results are insufficient, query again with different keywords** — try at least 2-3 different queries before concluding that the information isn't available.
+
+### If `CTX7_MODE=skill` — Use CLI/Skill
+
+MCP is not configured. Use the `find-docs` skill instead:
+
+1. **Invoke the skill** — call the `find-docs` skill via the Skill tool with the library name and topic as arguments.
+2. **Evaluate the results** — same as MCP path: verify the docs match your use case.
+3. **If results are insufficient, invoke again with different keywords** — rephrase, broaden, or narrow your search terms.
+
+### If `CTX7_MODE=unknown` or Not Set — Fallback
+
+The detection could not determine which method is available. Try in this order:
+
+1. **Try MCP first** — call `mcp__context7__resolve-library-id`. If it succeeds, continue with MCP tools.
+2. **If MCP fails** (tool not found / unknown tool error), **try the skill** — invoke `find-docs` via the Skill tool.
+3. **If both fail**, inform the user: "context7 is not available. Add a context7 MCP server to .mcp.json, or install a plugin that provides the find-docs skill."
 
 ### Step 0: Understand the Project First
 
@@ -84,55 +101,14 @@ Before querying docs, check what you're actually working with:
 
 This context shapes your queries. A project on Next.js 15 with Vercel serverless deployment needs different docs than one on Next.js 14 with a Node.js server. Without this step, you may find correct documentation for the wrong version.
 
-### Lookup Workflow
-
-1. **Resolve the library ID** — identify the library you need docs for (e.g., "nextjs", "react", "prisma", "tailwindcss").
-2. **Query the documentation** — look up the specific topic you need with a detailed, descriptive query. Include the version number and project context (e.g., deployment target, runtime) in your query when relevant.
-3. **Evaluate the results** — check whether the docs confirm your approach or reveal a better/newer API.
-4. **If results are insufficient, query again with different keywords** — a single query is often not enough. Rephrase, broaden, or narrow your search terms. Try at least 2-3 different queries before concluding that the information isn't available.
-
-### Query Strategy: Don't Stop at the First Result
-
-A common failure mode is querying once, getting a partial or irrelevant result, and then falling back to training data. This defeats the purpose of the lookup. Follow this escalation pattern:
-
-1. **First query: direct and specific** — use the exact API name or feature you're looking for.
-   - Example: `"updateTag revalidateTag cache invalidation"`
-2. **Second query: broaden if needed** — if the first query misses, try related concepts or the feature category.
-   - Example: `"cache invalidation server actions use cache"`
-3. **Third query: search for what's new** — explicitly ask about new or changed APIs in the current version.
-   - Example: `"new APIs next.js 15 caching breaking changes"`
-
-Do not assume your first query covers everything. Libraries often have multiple APIs for similar tasks, and the one you don't know about may be the correct one for your use case.
-
-### Verify Your Chosen API Is the Best Fit
-
-After finding an API that works, ask yourself: **"Is there a more specific API designed for exactly this use case?"** General-purpose APIs often have specialized alternatives that handle edge cases better.
-
-For example:
-- `revalidateTag` works for cache invalidation, but `updateTag` exists specifically for read-your-own-writes scenarios
-- `'use cache'` works for caching, but `'use cache: remote'` exists specifically for cross-instance cache sharing in serverless
-
-If the task description mentions a specific constraint (e.g., "serverless", "immediate consistency", "cross-instance"), query the docs for that constraint explicitly before settling on a general solution.
-
-### Tips for Effective Queries
-
-- Be specific with your topic. "next.config.js cacheComponents" is far better than "config".
-- Include key terms from the error message in your topic.
-- Check the project's `package.json` or config files for the exact version first, then reference docs for that version.
-- When the task has specific requirements (e.g., "shared across instances", "immediate invalidation"), include those requirements as keywords in your query.
-
-## Self-Check Questions
-
-If you can answer "yes" to any of these during work, you should use ctx7:
-
-1. Is this not the first time I've seen this error? Am I hitting the same class of error repeatedly?
-2. Am I confident this API/option/config behaves exactly this way in the current project's version?
-3. Is the code I'm about to write the pattern recommended by the official docs?
-4. Do I have concrete evidence that my planned approach will actually work?
-5. Could there be a more specific API designed for exactly this use case that I'm not aware of?
-
 ## Important Notes
 
 - ctx7 is a tool, not a silver bullet. After consulting the docs, you still need to adapt findings to the project's context.
 - If documentation conflicts with the project's existing patterns or conventions, prioritize the project's established approach while using the docs as a reference to adjust.
 - You do not need to use ctx7 for every API call. Querying things you already know with certainty is inefficient. The key is to use it when you **don't know**, when you **lack confidence**, or when **errors keep repeating**.
+
+## Reference Files
+
+For detailed query techniques and self-check guidelines:
+
+- **`references/query-strategy.md`** — Query escalation patterns, API fit verification, effective query tips, and self-check questions
