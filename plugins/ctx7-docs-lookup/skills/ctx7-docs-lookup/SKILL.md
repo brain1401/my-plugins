@@ -9,7 +9,7 @@ description: This skill should be used when encountering repeated or unknown err
 
 LLM training data contains outdated APIs, removed options, and behaviors that changed between versions. Relying solely on this knowledge leads to calling non-existent functions, using deprecated patterns, or generating code incompatible with the project's actual library versions. The result is wasted time debugging phantom issues and plans built on false assumptions.
 
-ctx7 (context7 MCP) can query **official documentation matching the exact version** of libraries used in the current project. Work from facts, not guesses.
+ctx7 (context7) can query **official documentation matching the exact version** of libraries used in the current project. Work from facts, not guesses.
 
 ## When NOT to Use ctx7
 
