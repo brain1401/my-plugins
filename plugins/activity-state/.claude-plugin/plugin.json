@@ -1,0 +1,6 @@
+{
+  "name": "activity-state",
+  "version": "1.0.0",
+  "description": "Next.js cacheComponents 환경에서 React Activity 상태 버그 방지",
+  "author": { "name": "brain1401" }
+}

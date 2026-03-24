@@ -1,0 +1,6 @@
+{
+  "name": "ctx7-docs-lookup",
+  "version": "1.0.0",
+  "description": "반복 오류 시 ctx7로 공식 문서 참조 강제",
+  "author": { "name": "brain1401" }
+}

@@ -1,0 +1,26 @@
+{
+  "name": "claude-plugins",
+  "owner": { "name": "brain1401" },
+  "plugins": [
+    {
+      "name": "korean-commit-message",
+      "description": "Korean conventional commit 메시지 규칙 적용 (Skill + Hook)",
+      "source": "./plugins/korean-commit-message"
+    },
+    {
+      "name": "korean-code-comments",
+      "description": "코드 작성/수정 시 복잡한 로직에 한국어 주석 작성 (Skill + Hook)",
+      "source": "./plugins/korean-code-comments"
+    },
+    {
+      "name": "ctx7-docs-lookup",
+      "description": "반복 오류 시 ctx7로 공식 문서 참조 강제 (Skill + Hook)",
+      "source": "./plugins/ctx7-docs-lookup"
+    },
+    {
+      "name": "activity-state",
+      "description": "Next.js cacheComponents 환경에서 React Activity 상태 버그 방지",
+      "source": "./plugins/activity-state"
+    }
+  ]
+}
