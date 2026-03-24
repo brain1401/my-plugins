@@ -37,7 +37,7 @@ ctx7-docs-lookup 플러그인이 MCP와 CLI(skill) 두 가지 방식의 context7
 - `jq`를 사용하여 각 파일의 `mcpServers` 객체 키를 파싱하고, 키 이름에 `context7` 또는 `ctx7`이 포함되어 있는지 확인 (대소문자 무시)
 - 발견되면 `CTX7_MODE=mcp` → `$CLAUDE_ENV_FILE`에 기록, 즉시 종료
 - 모든 파일 검색 후 미발견 시 `CTX7_MODE=skill` 기록
-- `jq` 미설치, 파일 파싱 실패 등 예외 시 `CTX7_MODE=unknown` 기록
+- `jq` 미설치 시 `CTX7_MODE=unknown` 기록. 파일 파싱 실패(malformed JSON)는 해당 파일을 건너뛰고 다음 파일로 진행 (모든 파일 미발견 시 `skill`로 귀결)
 - `$CLAUDE_ENV_FILE`이 미설정된 경우 감지를 건너뛰고 즉시 종료 (exit 0)
 - 항상 exit 0 (세션 시작을 차단하지 않음)
 
