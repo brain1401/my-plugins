@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""세션당 1회 한국어 주석 규칙 리마인드 (PostToolUse hook)."""
+"""Once-per-session Korean comment rules reminder (PostToolUse hook)."""
 
 import json
 import os
@@ -13,7 +13,7 @@ CODE_EXTENSIONS = {
 
 
 def get_file_paths(data: dict) -> list[str]:
-    """Write/Edit/MultiEdit에서 편집된 파일 경로 추출."""
+    """Extract edited file paths from Write/Edit/MultiEdit tool input."""
     tool_input = data.get("tool_input", {})
 
     # Write, Edit
@@ -34,27 +34,27 @@ def main() -> None:
     data = json.load(sys.stdin)
     session_id = data.get("session_id", "unknown")
 
-    # 코드 파일 편집 여부 확인
+    # Check if edited file is a code file
     file_paths = get_file_paths(data)
     if not any(is_code_file(fp) for fp in file_paths):
         sys.exit(0)
 
-    # 세션당 1회 체크
+    # Once-per-session check
     state_file = Path(f"/tmp/claude_comments_reminded_{session_id}")
     if state_file.exists():
         sys.exit(0)
 
-    # 상태 저장
+    # Save state
     state_file.touch()
 
-    # rules.md 읽어서 systemMessage로 출력
+    # Read rules.md and output as systemMessage
     plugin_root = os.environ.get("CLAUDE_PLUGIN_ROOT", "")
     rules_path = Path(plugin_root) / "hooks" / "rules.md"
 
     if rules_path.exists():
         rules_content = rules_path.read_text(encoding="utf-8")
     else:
-        rules_content = "복잡한 로직에 한국어 주석을 추가하세요."
+        rules_content = "Add Korean comments to complex logic sections."
 
     output = json.dumps({"systemMessage": rules_content}, ensure_ascii=False)
     print(output)

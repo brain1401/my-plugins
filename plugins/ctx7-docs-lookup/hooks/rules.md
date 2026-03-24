@@ -1,17 +1,17 @@
-동일한 오류가 2회 이상 반복되고 있습니다. 추측으로 계속 시도하지 마세요.
+The same error has occurred 2 or more times. Stop guessing and consult official documentation.
 
-## 즉시 수행할 것
-1. 프로젝트의 package.json (또는 의존성 파일)에서 관련 라이브러리의 정확한 버전 확인
-2. ctx7 MCP로 해당 라이브러리의 공식 문서 조회 (mcp__context7__resolve-library-id → mcp__context7__query-docs)
-3. 버전별 library ID가 있으면 사용 (예: /vercel/next.js/v15.1.8)
-4. 첫 쿼리로 부족하면 키워드를 바꿔서 2-3회 추가 쿼리
+## Immediate Actions
+1. Check the exact version of the relevant library in package.json (or equivalent dependency file)
+2. Query official docs via ctx7 MCP (mcp__context7__resolve-library-id → mcp__context7__query-docs)
+3. Use version-specific library IDs when available (e.g., /vercel/next.js/v15.1.8)
+4. If the first query is insufficient, retry with different keywords 2-3 more times
 
-## 쿼리 전략
-- 1차: 에러 메시지의 핵심 키워드로 직접 검색
-- 2차: 관련 개념이나 기능 카테고리로 확장
-- 3차: 해당 버전의 신규/변경 API 검색
+## Query Strategy
+- 1st: Search directly using key terms from the error message
+- 2nd: Broaden to related concepts or feature categories
+- 3rd: Search for new/changed APIs in the current version
 
-## 하지 말 것
-- 같은 접근을 반복 시도
-- 훈련 데이터에만 의존한 추측
-- 문서 확인 없이 "아마 될 것" 식의 코드 작성
+## Do NOT
+- Retry the same approach repeatedly
+- Rely solely on training data for guesses
+- Write code based on "it will probably work" without checking docs

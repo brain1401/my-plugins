@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""반복 에러 감지 후 ctx7 공식 문서 참조 리마인드 (PostToolUse hook)."""
+"""Detect repeated errors and remind to consult official docs via ctx7 (PostToolUse hook)."""
 
 import hashlib
 import json
@@ -12,20 +12,20 @@ ERROR_PATTERNS = re.compile(
     r"(?i)\b(error|exception|traceback|FAILED|panic)\b"
 )
 
-# 정규화 시 제거할 패턴 (파일 경로, 줄 번호, 숫자값)
+# Patterns to strip during normalization (file paths, line numbers, numeric values)
 NORMALIZE_PATTERNS = [
-    re.compile(r"(/[\w./-]+)"),          # 파일 경로
-    re.compile(r"\b\d+\b"),              # 숫자값 (줄 번호 포함)
-    re.compile(r"0x[0-9a-fA-F]+"),       # 16진수 주소
+    re.compile(r"(/[\w./-]+)"),          # file paths
+    re.compile(r"\b\d+\b"),              # numeric values (incl. line numbers)
+    re.compile(r"0x[0-9a-fA-F]+"),       # hex addresses
 ]
 
 
 def extract_error_signature(text: str) -> str | None:
-    """에러 메시지에서 정규화된 시그니처 해시 생성."""
+    """Generate a normalized signature hash from error message."""
     if not ERROR_PATTERNS.search(text):
         return None
 
-    # 에러 타입/클래스 + 첫 번째 줄 추출
+    # Extract error type/class + first error line
     lines = text.strip().splitlines()
     error_lines = [
         line.strip() for line in lines
@@ -35,14 +35,14 @@ def extract_error_signature(text: str) -> str | None:
     if not error_lines:
         return None
 
-    # 첫 번째 에러 줄만 사용
+    # Use only the first error line
     signature = error_lines[0]
 
-    # 정규화 (경로, 숫자 제거)
+    # Normalize (strip paths, numbers)
     for pattern in NORMALIZE_PATTERNS:
         signature = pattern.sub("", signature)
 
-    # 공백 정규화
+    # Normalize whitespace
     signature = re.sub(r"\s+", " ", signature).strip()
 
     if not signature:
@@ -59,12 +59,12 @@ def main() -> None:
     if isinstance(tool_result, dict):
         tool_result = json.dumps(tool_result)
 
-    # 에러 시그니처 생성
+    # Generate error signature
     signature = extract_error_signature(str(tool_result))
     if signature is None:
         sys.exit(0)
 
-    # 세션별 에러 추적 파일
+    # Per-session error tracking file
     tracking_path = Path(f"/tmp/claude_error_tracking_{session_id}.json")
 
     if tracking_path.exists():
@@ -72,18 +72,18 @@ def main() -> None:
     else:
         tracking = {}
 
-    # 카운트 업데이트
+    # Update count
     count = tracking.get(signature, 0) + 1
     tracking[signature] = count
     tracking_path.write_text(
         json.dumps(tracking, ensure_ascii=False), encoding="utf-8"
     )
 
-    # 2회 미만이면 스킵
+    # Skip if count < 2
     if count < 2:
         sys.exit(0)
 
-    # 2회 이상: rules.md 주입 + 카운터 리셋
+    # Count >= 2: inject rules.md + reset counter
     tracking[signature] = 0
     tracking_path.write_text(
         json.dumps(tracking, ensure_ascii=False), encoding="utf-8"
@@ -95,7 +95,7 @@ def main() -> None:
     if rules_path.exists():
         rules_content = rules_path.read_text(encoding="utf-8")
     else:
-        rules_content = "동일 오류 반복 감지. ctx7으로 공식 문서를 확인하세요."
+        rules_content = "Repeated error detected. Consult official docs via ctx7."
 
     output = json.dumps({"systemMessage": rules_content}, ensure_ascii=False)
     print(output)

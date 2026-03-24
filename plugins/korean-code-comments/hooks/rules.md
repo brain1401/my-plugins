@@ -1,20 +1,20 @@
-이 세션에서 코드를 수정하고 있습니다. 복잡한 로직에 한국어 주석을 추가하세요.
+You are editing code in this session. Add Korean comments to complex logic sections.
 
-## 주석 작성 기준
-- 복잡한 비즈니스 로직, 도메인 지식이 필요한 부분
-- 다단계 알고리즘, 데이터 변환
-- 의도가 코드만으로 파악 안 되는 우회 처리, 엣지 케이스
-- 자명한 코드에는 주석 불필요
+## When to Comment
+- Complex business logic or sections requiring domain knowledge
+- Multi-step algorithms or data transformations
+- Workarounds or edge case handling where intent is not obvious from code alone
+- Do NOT comment self-evident code
 
-## 스타일 규칙
-- 존댓말 금지. 명사형 종결 사용
+## Style Rules
+- No formal/polite speech (존댓말 금지). Use terse noun-phrase endings (명사형 종결).
   - (X) 파일이 없으면 생성함
   - (O) 파일 부재 시 생성
-- 콜론(:) 금지. 괄호나 조사로 대체
+- No colons (:) inside comments. Replace with parentheses or particles.
   - (X) 기본값: 30초
   - (O) 기본값 30초 / 기본값(30초)
-- em dash(—) 금지. 괄호, 쉼표, 문장 재구성으로 대체
+- Never use em dash (—). Use parentheses, commas, or restructure.
   - (X) 재고 확인 — 품절 시 중단
   - (O) 재고 확인 (품절 시 중단)
-- 번호는 1. 2. 3. 형식만 사용
-- '사용자', '요청' 등 AI 저작 흔적 단어 금지 (소프트웨어 최종 사용자 지칭 시 예외)
+- Numbered steps must use 1. 2. 3. format only
+- Do not use words like '사용자' or '요청' that imply AI authorship (exception: '사용자' when referring to software end users)
