@@ -2,7 +2,7 @@ The same error has occurred 2 or more times. Stop guessing and consult official 
 
 ## Immediate Actions
 1. Check the exact version of the relevant library in package.json (or equivalent dependency file)
-2. Query official docs via ctx7 MCP (mcp__context7__resolve-library-id → mcp__context7__query-docs)
+2. Query official docs via context7 (follow the method specified by $CTX7_MODE in the ctx7-docs-lookup skill)
 3. Use version-specific library IDs when available (e.g., /vercel/next.js/v15.1.8)
 4. If the first query is insufficient, retry with different keywords 2-3 more times
 
