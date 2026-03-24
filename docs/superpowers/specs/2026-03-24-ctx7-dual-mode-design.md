@@ -33,11 +33,17 @@ ctx7-docs-lookup 플러그인이 MCP와 CLI(skill) 두 가지 방식의 context7
 | 6 | `~/.claude/settings.local.json` | Global |
 
 **감지 로직:**
-- 각 파일에서 `"context7"` 키워드를 `mcpServers` 섹션 내에서 검색
+
+- `jq`를 사용하여 각 파일의 `mcpServers` 객체 키를 파싱하고, 키 이름에 `context7` 또는 `ctx7`이 포함되어 있는지 확인 (대소문자 무시)
 - 발견되면 `CTX7_MODE=mcp` → `$CLAUDE_ENV_FILE`에 기록, 즉시 종료
 - 모든 파일 검색 후 미발견 시 `CTX7_MODE=skill` 기록
-- 파일 파싱 실패 등 예외 시 `CTX7_MODE=unknown` 기록
+- `jq` 미설치, 파일 파싱 실패 등 예외 시 `CTX7_MODE=unknown` 기록
+- `$CLAUDE_ENV_FILE`이 미설정된 경우 감지를 건너뛰고 즉시 종료 (exit 0)
 - 항상 exit 0 (세션 시작을 차단하지 않음)
+
+**환경 변수 스코프:**
+
+- `$CLAUDE_ENV_FILE`은 세션 스코프이며, 각 세션 시작 시 새로 작성된다. 이전 세션의 값이 다음 세션에 잔존하지 않는다.
 
 ### 2. hooks.json Update
 
@@ -82,7 +88,17 @@ ctx7-docs-lookup 플러그인이 MCP와 CLI(skill) 두 가지 방식의 context7
 - **`CTX7_MODE=skill`**: `find-docs` skill 호출
 - **`CTX7_MODE=unknown` 또는 미설정**: MCP 시도 → 실패 시 skill fallback → 둘 다 실패 시 사용자에게 설치 안내
 
+**`unknown` fallback 실패 판단 기준:**
+
+- MCP 실패: 도구가 존재하지 않는 경우 (tool not found / unknown tool 에러)
+- Skill 실패: `find-docs` skill이 사용 가능한 skill 목록에 없는 경우
+- 두 방식 모두 실패 시, 사용자에게 "context7 MCP 서버를 .mcp.json에 추가하거나, find-docs skill이 포함된 플러그인을 설치하세요"라고 안내
+
 나머지 섹션(Why, When NOT to Use, Trigger Conditions, Important Notes, References)은 변경 없음.
+
+**`$CTX7_MODE`와 rules.md 연동:**
+
+`rules.md`는 `detect_repeated_errors.py`에 의해 `systemMessage`로 주입된다. 이 시점에서 `$CTX7_MODE`는 이미 `$CLAUDE_ENV_FILE`을 통해 세션 환경 변수로 설정되어 있으므로, LLM이 `rules.md`의 "$CTX7_MODE에 따라 행동하라"는 지시를 해석할 수 있다.
 
 ### 4. rules.md Mode Neutralization
 
@@ -106,5 +122,5 @@ Query Strategy, Do NOT 섹션은 변경 없음.
 ## Non-Goals
 
 - context7 설치 자동화
-- 세션 중간에 모드 전환 (환경 변수는 세션 시작 시 고정)
-- `.mcp.json` 이외 위치의 MCP 서버 감지 (위 6개 위치면 충분)
+- 세션 중간에 모드 전환 (환경 변수는 세션 시작 시 고정, `$CLAUDE_ENV_FILE`은 세션 스코프)
+- `find-docs` skill 존재 여부의 사전 감지 (bash에서 skill 목록 접근 불가, `unknown` fallback이 커버)
