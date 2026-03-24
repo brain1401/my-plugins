@@ -255,9 +255,15 @@ In the YAML frontmatter (line 3), replace `Forces the use of ctx7 (context7 MCP)
 
 - [ ] **Step 2: Replace the "How to Use context7" section**
 
-Replace the entire section from `## How to Use context7` (line 65) through the end of `### Lookup Workflow` (line 93, the last bullet point). This removes the old table-based method list and the `### Lookup Workflow` subsection. **Keep `### Step 0: Understand the Project First`** (lines 77-85) — it remains valid for all modes and should appear after the new section.
+Two edits are needed to preserve `### Step 0` while replacing the surrounding content:
 
-Replace with:
+**Edit A:** Replace lines 65-76 (from `## How to Use context7` heading through the paragraph ending before `### Step 0`). This removes the old table-based access method list. Replace with the new conditional content below.
+
+**Edit B:** Delete lines 86-93 (`### Lookup Workflow` and its 4 bullet points). The lookup workflow steps are now embedded within each mode's subsection above.
+
+**Result:** `### Step 0: Understand the Project First` (lines 77-85) remains in place, now appearing after the three new mode subsections.
+
+**Edit A replacement content:**
 
 ```markdown
 ## How to Use context7
