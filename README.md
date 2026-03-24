@@ -1,31 +1,34 @@
-# skill.md
+# claude-plugins
 
-AI 코딩 에이전트용 스킬 모음
+brain1401의 Claude Code 플러그인 마켓플레이스
 
-## Skills
+## Plugins
 
-| Name | Description | Install |
+| Plugin | Description | Hook |
 | --- | --- | --- |
-| [korean-code-comments](skills/korean-code-comments/SKILL.md) | 코드 작성/수정 시 복잡한 로직에 한국어 주석 작성 | `npx skills add brain1401/skill.md --skill korean-code-comments` |
-| [korean-commit-message](skills/korean-commit-message/SKILL.md) | Korean conventional commit 메시지 규칙 적용 | `npx skills add brain1401/skill.md --skill korean-commit-message` |
-| [activity-state](skills/activity-state/SKILL.md) | Next.js `cacheComponents` 환경에서 React Activity 상태 보존으로 인한 버그 방지 | `npx skills add brain1401/skill.md --skill activity-state` |
-| [ctx7-docs-lookup](skills/ctx7-docs-lookup/SKILL.md) | 반복 오류 발생 시 또는 계획 수립 시 확신 부족할 때 ctx7으로 공식 문서 참조 강제 | `npx skills add brain1401/skill.md --skill ctx7-docs-lookup` |
+| [korean-commit-message](plugins/korean-commit-message/) | Korean conventional commit 메시지 규칙 적용 및 자동 검증 | PreToolUse (Bash) |
+| [korean-code-comments](plugins/korean-code-comments/) | 코드 작성/수정 시 복잡한 로직에 한국어 주석 자동 작성 | PostToolUse (Write/Edit) |
+| [ctx7-docs-lookup](plugins/ctx7-docs-lookup/) | 반복 오류 시 ctx7로 공식 문서 참조 강제 | PostToolUse (Bash) |
+| [activity-state](plugins/activity-state/) | Next.js cacheComponents 환경에서 React Activity 상태 버그 방지 | - |
 
 ## Install
 
 ```bash
-# 전체 스킬 설치
-npx skills add brain1401/skill.md
+# 마켓플레이스 등록
+/plugin marketplace add brain1401/claude-plugins
 
-# 스킬 목록 확인
-npx skills add brain1401/skill.md --list
-
-# 특정 스킬만 설치
-npx skills add brain1401/skill.md --skill korean-code-comments
-
-# 특정 에이전트에만 설치
-npx skills add brain1401/skill.md -a claude-code
-
-# 글로벌 설치
-npx skills add brain1401/skill.md --global
+# 개별 플러그인 설치
+/plugin install korean-commit-message@claude-plugins
+/plugin install korean-code-comments@claude-plugins
+/plugin install ctx7-docs-lookup@claude-plugins
+/plugin install activity-state@claude-plugins
 ```
+
+## Architecture
+
+각 플러그인은 **Skill + Hook 하이브리드** 구조:
+
+- **Skill**: Claude가 작업 시작 시 로드. 상세 규칙, 패턴, 예시를 포함한 완전한 가이드 제공
+- **Hook**: 특정 이벤트 발생 시 자동 실행. 검증 또는 핵심 규칙 리마인드
+
+둘은 독립적인 이중 안전장치로, Skill이 invoke되지 않아도 Hook이 핵심 규칙을 보장합니다.
