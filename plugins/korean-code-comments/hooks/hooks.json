@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/remind_comments.py",
+            "command": "python3 ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/remind_comments.py",
             "timeout": 10
           }
         ]

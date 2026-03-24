@@ -1,6 +1,6 @@
 ---
 name: ctx7-docs-lookup
-description: This skill should be used when encountering repeated or unknown errors during coding, or when uncertain whether current knowledge accurately applies to the project's library versions during planning. Triggers on any code implementation or planning situation, especially when errors repeat 2+ times or library/framework API usage is uncertain. Consult this skill whenever debugging errors, adopting new libraries, verifying API usage, writing config files, handling migrations, or any situation where checking official docs could prevent wasted effort. Forces the use of ctx7 (context7) to consult official documentation.
+description: This skill should be used when encountering repeated errors during coding (same error 2+ times), or when uncertain about library API behavior in the project's versions. Triggers on phrases like "look up the docs", "check official documentation", "this error keeps happening", "does this API exist in version Y". Also relevant when adopting unfamiliar libraries, verifying API signatures, handling migrations, or writing version-specific config. Uses ctx7 (context7) to query official documentation.
 ---
 
 # ctx7 Official Documentation Lookup Guide
@@ -64,6 +64,18 @@ Planning based on "this will probably work" can cause the entire plan to collaps
 
 ## How to Use context7
 
+### Step 0: Understand the Project First
+
+Before querying docs, check what you're actually working with:
+
+1. Read `package.json` (or equivalent dependency file) to identify the **exact versions** of libraries in use.
+2. Note the project's tech stack — framework, language, deployment target (serverless, edge, etc.).
+3. Use version-specific library IDs when available (e.g., `/vercel/next.js/v15.1.8` instead of `/vercel/next.js`).
+
+This context shapes your queries. A project on Next.js 15 with Vercel serverless deployment needs different docs than one on Next.js 14 with a Node.js server. Without this step, you may find correct documentation for the wrong version.
+
+### Query by CTX7_MODE
+
 The `$CTX7_MODE` environment variable is automatically set at session start. Check its value and follow the corresponding path below.
 
 ### If `CTX7_MODE=mcp` — MCP Tools Available
@@ -90,16 +102,6 @@ The detection could not determine which method is available. Try in this order:
 1. **Try MCP first** — call `mcp__context7__resolve-library-id`. If it succeeds, continue with MCP tools.
 2. **If MCP fails** (tool not found / unknown tool error), **try the skill** — invoke `find-docs` via the Skill tool.
 3. **If both fail**, inform the user: "context7 is not available. Add a context7 MCP server to .mcp.json, or install a plugin that provides the find-docs skill."
-
-### Step 0: Understand the Project First
-
-Before querying docs, check what you're actually working with:
-
-1. Read `package.json` (or equivalent dependency file) to identify the **exact versions** of libraries in use.
-2. Note the project's tech stack — framework, language, deployment target (serverless, edge, etc.).
-3. Use version-specific library IDs when available (e.g., `/vercel/next.js/v15.1.8` instead of `/vercel/next.js`).
-
-This context shapes your queries. A project on Next.js 15 with Vercel serverless deployment needs different docs than one on Next.js 14 with a Node.js server. Without this step, you may find correct documentation for the wrong version.
 
 ## Important Notes
 

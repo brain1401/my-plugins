@@ -109,8 +109,9 @@ When integrating these libraries, verify whether reinitialization is needed on v
 To test Activity behavior, wrap the component in `<Activity>` and toggle its mode:
 
 ```tsx
+import { useState } from 'react'
 import { Activity } from 'react'
-import { render, act } from '@testing-library/react'
+import { render, act, screen, fireEvent } from '@testing-library/react'
 
 test('Dialog should close on Activity hidden transition', () => {
   let setMode: (mode: 'visible' | 'hidden') => void

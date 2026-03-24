@@ -1,6 +1,6 @@
 ---
 name: activity-state
-description: Use when implementing, reviewing, or debugging client components in a Next.js project with `cacheComponents` enabled. This skill prevents bugs caused by React Activity state preservation — where component state (Dialog open, Dropdown open, form values, scroll position, timers) persists across route navigations instead of resetting. Trigger whenever you create or modify client components that manage open/close state, ephemeral UI state, or side effects — especially components using Dialog, Dropdown, Popover, Sheet, Modal, Tooltip, Alert Dialog, or any controlled open/close pattern. Also trigger when the user reports that UI state "sticks" after navigation, or when implementing route-level pages that contain interactive components. Even simple components can be affected — if a component has `useState` and lives inside a route, this skill applies.
+description: This skill should be used when implementing, reviewing, or debugging client components in a Next.js project with cacheComponents enabled. Covers React Activity state preservation bugs where ephemeral UI state (Dialog, Dropdown, Popover, Sheet, Modal, Tooltip open/close) persists across route navigations instead of resetting. Triggers when the user reports UI state "sticking" after navigation, or when creating components with open/close state inside cached routes.
 ---
 
 # Activity State Management in Next.js with cacheComponents

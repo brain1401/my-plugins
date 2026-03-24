@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/inject_rules.sh",
+            "command": "bash ${CLAUDE_PLUGIN_ROOT}/hooks/scripts/inject_rules.sh",
             "timeout": 5
           },
           {

@@ -1,13 +1,13 @@
 ---
 name: korean-code-comments
-description: Write Korean comments on complex code sections whenever writing, editing, or creating code. Trigger on any code modification (feature implementation, bug fixes, refactoring, file creation, or code review). If you're touching code, consult this skill for commenting guidelines. Also applies when explaining code in conversation responses.
+description: This skill should be used when writing, modifying, or creating code in any language to ensure complex logic sections receive Korean comments. Triggers on user requests like "add comments", "한국어 주석", "comment this code", or any code modification task (feature implementation, bug fixes, refactoring, file creation). Also applies when explaining code in conversation responses or showing code snippets. Provides style rules for Korean comment tone, punctuation, and formatting.
 ---
 
 # Korean Code Comment Guide
 
 ## Core Rule
 
-When writing or modifying code, always add Korean comments to complex sections that meet the criteria below, even without an explicit request. Once this skill is triggered, commenting is default behavior, not optional. These guidelines apply the moment you touch code, regardless of whether the user asks for comments.
+When writing or modifying code, add Korean comments to complex sections that meet the criteria below by default, unless the user explicitly opts out. Once this skill is triggered, commenting is default behavior. These guidelines apply the moment you touch code.
 
 Do not comment self-evident code. Comments are valuable when they explain "why" or "in what context."
 
