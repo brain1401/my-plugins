@@ -12,6 +12,11 @@ if [[ -z "${CLAUDE_ENV_FILE:-}" ]]; then
   exit 0
 fi
 
+# Guard: if CTX7_MODE is already set, skip (idempotency)
+if grep -q "^export CTX7_MODE=" "$CLAUDE_ENV_FILE" 2>/dev/null; then
+  exit 0
+fi
+
 # Guard: if jq is not installed, set unknown mode
 if ! command -v jq &>/dev/null; then
   echo "export CTX7_MODE=unknown" >> "$CLAUDE_ENV_FILE"
