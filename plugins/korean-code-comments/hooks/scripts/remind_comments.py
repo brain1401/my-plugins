@@ -4,6 +4,7 @@
 import json
 import os
 import sys
+import uuid
 from pathlib import Path
 
 CODE_EXTENSIONS = {
@@ -13,7 +14,7 @@ CODE_EXTENSIONS = {
 
 
 def get_file_paths(data: dict) -> list[str]:
-    """Extract edited file paths from Write/Edit/MultiEdit tool input."""
+    """Extract edited file paths from Write/Edit tool input."""
     tool_input = data.get("tool_input", {})
 
     # Write, Edit
@@ -32,7 +33,7 @@ def is_code_file(file_path: str) -> bool:
 
 def main() -> None:
     data = json.load(sys.stdin)
-    session_id = data.get("session_id", "unknown")
+    session_id = data.get("session_id") or uuid.uuid4().hex
 
     # Check if edited file is a code file
     file_paths = get_file_paths(data)
