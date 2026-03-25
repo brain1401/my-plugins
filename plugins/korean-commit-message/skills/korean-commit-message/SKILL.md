@@ -55,12 +55,13 @@ feat: 사용자 로그인 기능 추가함        ← Korean: colloquial ending 
 
 ## Body Rules
 
-The body is optional. Include it when the subject alone does not convey enough context.
+The body is optional. **Omit it when the subject alone is self-explanatory.** Only include the body when there are multiple changes or the subject cannot convey enough context on its own.
 
 - Separate from the subject with a blank line
 - Wrap each line at 72 characters
 - Explain **what** changed and **why**, not **how** (the code shows how)
 - Write body text in Korean. English is acceptable for technical terms or when the audience is international
+- **Always use bullet points (`-`).** Do not write prose paragraphs
 
 **Examples:**
 ```
