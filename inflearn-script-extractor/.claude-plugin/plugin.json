@@ -1,0 +1,6 @@
+{
+  "name": "inflearn-script-extractor",
+  "version": "1.0.0",
+  "description": "Playwright MCP 기반 인프런 강의 스크립트 자동 추출",
+  "author": { "name": "brain1401" }
+}

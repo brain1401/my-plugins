@@ -4,33 +4,15 @@ brain1401의 Claude Code 플러그인 마켓플레이스
 
 ## Plugins
 
-### 마켓플레이스 등록 플러그인
-
-`/plugin install`로 설치 가능한 플러그인.
-
 | Plugin | Description | Hook |
 | --- | --- | --- |
 | [korean-commit-message](plugins/korean-commit-message/) | Korean conventional commit 메시지 규칙 적용 및 자동 검증 | PreToolUse (Bash) |
 | [korean-code-comments](plugins/korean-code-comments/) | 코드 작성/수정 시 복잡한 로직에 한국어 주석 자동 작성 | PostToolUse (Write/Edit) |
 | [activity-state](plugins/activity-state/) | Next.js cacheComponents 환경에서 React Activity 상태 버그 방지 | - |
 | [git-workflow](plugins/git-workflow/) | Feature branch + PR + Squash merge 워크플로 + Spec-First 브레인스토밍 통합 | - |
-
-### 로컬 전용 플러그인
-
-마켓플레이스 미등록. `--plugin-dir`로 로드하거나 수동 복사하여 사용.
-
-| Plugin | Description |
-| --- | --- |
-| [claude-docs-integrity](plugins/claude-docs-integrity/) | CLAUDE.md와 .claude/rules/ 간 정합성, 중복성, 경로 유효성, 교차 참조 검증 및 수정 |
-| [frontend-tdd](frontend-tdd/) | Superpowers TDD 스킬 보완용 프론트엔드 테스팅 가이드 |
-
-### 독립 스킬
-
-플러그인이 아닌 단독 스킬. 프로젝트의 `.claude/skills/`에 복사하여 사용.
-
-| Skill | Description |
-| --- | --- |
-| [inflearn-script-extractor](inflearn-script-extractor/) | Playwright MCP 기반 인프런 강의 스크립트 추출 |
+| [claude-docs-integrity](plugins/claude-docs-integrity/) | CLAUDE.md와 .claude/rules/ 간 정합성, 중복성, 경로 유효성, 교차 참조 검증 및 수정 | - |
+| [frontend-tdd](frontend-tdd/) | Superpowers TDD 스킬 보완용 프론트엔드 테스팅 가이드 | - |
+| [inflearn-script-extractor](inflearn-script-extractor/) | Playwright MCP 기반 인프런 강의 스크립트 자동 추출 | - |
 
 ## Install
 
@@ -43,6 +25,9 @@ brain1401의 Claude Code 플러그인 마켓플레이스
 /plugin install korean-code-comments@my-plugins
 /plugin install activity-state@my-plugins
 /plugin install git-workflow@my-plugins
+/plugin install claude-docs-integrity@my-plugins
+/plugin install frontend-tdd@my-plugins
+/plugin install inflearn-script-extractor@my-plugins
 ```
 
 ## Architecture
@@ -54,13 +39,14 @@ brain1401의 Claude Code 플러그인 마켓플레이스
 
 둘은 독립적인 이중 안전장치로, Skill이 invoke되지 않아도 Hook이 핵심 규칙을 보장합니다.
 
-### Skill Only (git-workflow, activity-state, frontend-tdd)
+### Skill Only (git-workflow, activity-state, frontend-tdd, inflearn-script-extractor)
 
 Hook 없이 Skill만으로 구성. Claude가 작업 컨텍스트에 따라 자동 활성화.
 
 - **git-workflow**: 2개 스킬 번들 (git-workflow + spec-first-workflow). 프로젝트 무관 범용 워크플로
 - **activity-state**: Next.js cacheComponents 환경 전용
 - **frontend-tdd**: Superpowers TDD 스킬 보완. 프론트엔드 테스트 분류 + 패턴 가이드
+- **inflearn-script-extractor**: Playwright MCP로 인프런 강의 자막 자동 수집 + 구조화 문서 생성
 
 ### Multi-Agent Pipeline (claude-docs-integrity)
 

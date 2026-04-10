@@ -13,11 +13,6 @@
       "source": "./plugins/korean-code-comments"
     },
     {
-      "name": "ctx7-docs-lookup",
-      "description": "반복 오류 시 ctx7로 공식 문서 참조 강제 (Skill + Hook)",
-      "source": "./plugins/ctx7-docs-lookup"
-    },
-    {
       "name": "activity-state",
       "description": "Next.js cacheComponents 환경에서 React Activity 상태 버그 방지",
       "source": "./plugins/activity-state"
@@ -26,6 +21,21 @@
       "name": "git-workflow",
       "description": "Feature branch + PR + Squash merge 워크플로 + Spec-First 브레인스토밍 통합",
       "source": "./plugins/git-workflow"
+    },
+    {
+      "name": "claude-docs-integrity",
+      "description": "CLAUDE.md와 .claude/rules/ 간 정합성, 중복성, 경로 유효성, 교차 참조 검증 및 수정",
+      "source": "./plugins/claude-docs-integrity"
+    },
+    {
+      "name": "frontend-tdd",
+      "description": "Superpowers TDD 스킬 보완용 프론트엔드 테스팅 가이드",
+      "source": "./frontend-tdd"
+    },
+    {
+      "name": "inflearn-script-extractor",
+      "description": "Playwright MCP 기반 인프런 강의 스크립트 자동 추출",
+      "source": "./inflearn-script-extractor"
     }
   ]
 }
