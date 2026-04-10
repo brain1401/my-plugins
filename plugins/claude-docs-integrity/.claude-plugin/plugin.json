@@ -1,0 +1,9 @@
+{
+  "name": "claude-docs-integrity",
+  "version": "0.1.0",
+  "description": "Audit and fix consistency, redundancy, validity, and cross-references across CLAUDE.md and .claude/rules/ files",
+  "author": {
+    "name": "Aiden"
+  },
+  "keywords": ["claude-md", "rules", "audit", "integrity", "consistency"]
+}

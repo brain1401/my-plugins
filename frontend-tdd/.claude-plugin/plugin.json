@@ -1,0 +1,8 @@
+{
+  "name": "frontend-tdd",
+  "version": "0.1.0",
+  "description": "Frontend-specific TDD guidance that complements Superpowers' test-driven-development skill. Covers component testing patterns, visual verification, and anti-rationalizations for frontend work.",
+  "author": {
+    "name": "Aiden"
+  }
+}
