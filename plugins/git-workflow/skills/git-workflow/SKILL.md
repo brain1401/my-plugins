@@ -1,6 +1,6 @@
 ---
 name: git-workflow
-description: Use when committing, pushing, branching, or working with PRs. Enforces the feature branch + PR + Squash merge policy for behavioral changes (product code, tests, dependencies) while allowing direct `main` commits for docs, tooling, and behavior-preserving refactors. Invoke BEFORE any `git commit`, `git push`, `gh pr create`, or `gh pr merge` — the rules around direct `main` commits are non-obvious and the wrong merge mode (regular/rebase instead of squash) corrupts `main` history. Also covers intra-branch commit hygiene, branch patterns (single/stacked/parallel), rebase conflict resolution, draft PRs, PR sizing, PR message format, and how to revert. For brainstorming/planning workflows that produce spec/plan documents, also see the `spec-first-workflow` skill.
+description: Use when committing, pushing, branching, or working with PRs. Enforces feature branch + PR + Squash merge for behavioral changes while allowing direct `main` commits for docs, tooling, and behavior-preserving refactors. Invoke BEFORE any `git commit`, `git push`, `gh pr create`, or `gh pr merge`. Direct `main` commit rules are non-obvious, and the wrong merge mode corrupts `main` history. Covers intra-branch commit hygiene, branch patterns (single/stacked/parallel), rebase conflict resolution, draft PRs, PR sizing, PR message format, and how to revert. For brainstorming/planning workflows, also see the `spec-first-workflow` skill.
 ---
 
 # Git Workflow
@@ -260,12 +260,12 @@ For the PR body, use the **What / Why / How / Testing** structure. Korean by def
 Separate unit test and E2E test results. E2E tests are mandatory.
 
 ### Unit tests
-- [ ] `pnpm test` results (Vitest / pytest, include test count)
+- [ ] Unit test results (include framework name and test count)
 
 ### E2E tests
 - [ ] E2E verification for the changed scope
-  - Frontend: Playwright (`pnpm test:e2e`)
-  - Backend: start server + verify with real HTTP requests (`pnpm dev` → `curl` / Playwright)
+  - Frontend: E2E test framework (project's E2E test command)
+  - Backend: start server + verify with real HTTP requests
   - List test scenarios and pass/fail status
 
 Closes #123
@@ -325,15 +325,15 @@ gh pr create --title "feat: 패스키 로그인 추가" --body "$(cat <<'EOF'
 
 ## How
 1. Better Auth `passkey` 플러그인 활성화
-2. `apps/web/src/app/(auth)/login/passkey-button.tsx` 추가
+2. `src/app/(auth)/login/passkey-button.tsx` 추가
 3. 등록 플로우는 후속 PR로 분리
 
 ## Testing
 ### Unit tests
-- [x] Vitest: passkey auth handler tests (3 files, 12 tests passed)
+- [x] Unit: passkey auth handler tests (3 files, 12 tests passed)
 
 ### E2E tests
-- [x] Playwright: login → passkey registration → re-login scenario passed
+- [x] E2E: login → passkey registration → re-login scenario passed
 - [x] Manual: verified real passkey registration in Chrome/Safari
 
 Closes #45

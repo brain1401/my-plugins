@@ -11,7 +11,7 @@ The right pattern: **create the feature branch early (during brainstorming), com
 
 ```text
 main
-  └── refactor/some-feature (local only during brainstorming)
+  └── <type>/some-feature (local only during brainstorming)
         ├── Commit 1: docs: <feature> 설계서 추가          ← spec from brainstorming
         ├── Commit 2: docs: <feature> 구현 계획 추가        ← plan from writing-plans
         ├── Commit 3..N: feat/refactor/test/...           ← actual implementation
@@ -30,10 +30,10 @@ main
 ```bash
 # 1. Brainstorming starts — create the feature branch immediately
 git checkout main && git pull
-git checkout -b refactor/some-feature
+git checkout -b <type>/some-feature   # use the appropriate prefix: feat/, fix/, refactor/, etc.
 
 # 2. brainstorming skill writes the spec. Commit it locally (no push)
-git add docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md
+git add docs/superpowers/specs/YYYY-MM-DD-<topic>-design.md   # paths follow the Superpowers plugin convention
 git commit -m "..."   # ← if a commit message skill is configured, invoke it
 
 # 3. writing-plans skill writes the plan. Commit locally
@@ -46,7 +46,7 @@ git commit -m "..."
 # ... repeat for each commit unit ...
 
 # 5. Implementation done — push and open PR (see git-workflow skill for PR format)
-git push -u origin refactor/some-feature
+git push -u origin <type>/some-feature
 gh pr create --title "..." --body "..."
 
 # 6. Squash merge
@@ -73,7 +73,7 @@ If the user decides not to proceed and the branch hasn't been pushed:
 
 ```bash
 git checkout main
-git branch -D refactor/some-feature
+git branch -D <type>/some-feature
 ```
 
 If the branch was already pushed (e.g., a draft PR was opened for early visibility across sessions), close the PR without merging and delete the remote branch.
