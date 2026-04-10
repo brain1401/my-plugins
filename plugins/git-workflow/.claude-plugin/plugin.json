@@ -1,0 +1,6 @@
+{
+  "name": "git-workflow",
+  "version": "1.0.0",
+  "description": "Feature branch + PR + Squash merge workflow with Spec-First brainstorming integration",
+  "author": { "name": "brain1401" }
+}

@@ -21,6 +21,11 @@
       "name": "activity-state",
       "description": "Next.js cacheComponents 환경에서 React Activity 상태 버그 방지",
       "source": "./plugins/activity-state"
+    },
+    {
+      "name": "git-workflow",
+      "description": "Feature branch + PR + Squash merge 워크플로 + Spec-First 브레인스토밍 통합",
+      "source": "./plugins/git-workflow"
     }
   ]
 }
